@@ -1,25 +1,8 @@
-#pragma once
-
-#include <algorithm>
-#include <iostream>
-
-#include "Enemy.hpp"
-#include "Player.hpp"
-#include "Ability.hpp"
-
-#include "gameAbilities.hpp"
-
-class CombatEngine {
-public:
-	static Player player;
-	static Enemy enemy;
-
-	static std::vector<Ability> abilities;
-	static std::vector<PhysicalAbility> physicalAbilities;
-	static std::vector<MagicAbility> magicAbilities;
+// CombatEngine.cpp
+#include "CombatEngine.hpp"
 
 	// Game related functions
-	static bool isEnemyAlive() {
+	bool CombatEngine::isEnemyAlive() {
 		if (enemy.getHealth() > 0) {
 			return true;
 		}
@@ -31,8 +14,7 @@ public:
 			return false;
 		}
 	}
-	
-	static bool isPlayerAlive() {
+	bool CombatEngine::isPlayerAlive() {
 		if (player.getHealth() > 0) {
 			return true;
 		}
@@ -45,37 +27,31 @@ public:
 		}
 	}
 
-	static void attackPlayer() {
-	//	player.takeDamage(calculateEnemyDamage());
+	void CombatEngine::attackPlayer() {
+		//	player.takeDamage(calculateEnemyDamage());
 	}
+	void CombatEngine::attackEnemy() {
 
-	// attack with Weapon
-	static void attackEnemy() {
-		
 	}
-
-	// Attack with physical ability
-	static void attackEnemy(const PhysicalAbility& physicalAbility) {
+	void CombatEngine::attackEnemy(const PhysicalAbility* physicalAbility) {
 		float damage = calculatePlayerDamage(physicalAbility);
 		enemy.takeDamage(damage);
 
-		std::cout << player.getName() << " caused " << damage << " damage to " << enemy.getName() << std::endl;
+		IOHandler::displayCausedDamage(player.getName(), enemy.getName(), damage, enemy.getHealth(), enemy.getMaxHealth());
 	}
-	
-	// Attack with magic ability
-	static void attackEnemy(const MagicAbility& magicAbility) {
+	void CombatEngine::attackEnemy(const MagicAbility& magicAbility) {
 
 	}
 
-	static void distributeExperience() {
+	void CombatEngine::distributeExperience() {
 
 	}
 
-	static void distributeGold() {
+	void CombatEngine::distributeGold() {
 
 	}
 
-	static void distributeLoot() {
+	void CombatEngine::distributeLoot() {
 		if (enemy.getHealth() == 0) {
 
 		}
@@ -84,23 +60,17 @@ public:
 		}
 	}
 
-	static PhysicalAbility& selectPhysicalAbility() {
-		player.displayPhysicalAbilities();
-		std::cout << "Select an ability:\n";
-		int choice;
-		std::cin >> choice;
-		if (choice >= 1 && choice <= static_cast<int>(player.getPhysicalAbilities().size())) {
-			return player.getPhysicalAbilities()[choice - 1];
+	PhysicalAbility* CombatEngine::selectPhysicalAbility() {
+		IOHandler::displaySelectionPhysicalAbilities(player.getPhysicalAbilities());
+		PhysicalAbility* readSelectPhysicalAbility = IOHandler::readSelectionPhysicalAbilities(player.getPhysicalAbilities());
+		while (selectPhysicalAbility == nullptr) {
+			readSelectPhysicalAbility = IOHandler::readSelectionPhysicalAbilities(player.getPhysicalAbilities());
 		}
-		else {
-			std::cout << "Invalid choice. Please try again";
-			return selectPhysicalAbility();
-		}
+		return readSelectPhysicalAbility;
 	}
 
-	static MagicAbility& selectMagicAbility() {
-		player.displayMagicAbilities();
-		std::cout << "Select an ability:\n";
+	MagicAbility* CombatEngine::selectMagicAbility() {
+		//IOHandler::displaySelectMagicAbilities(player.getMagicAbilities());
 		int choice;
 		std::cin >> choice;
 		if (choice >= 1 && choice <= player.getMagicAbilities().size()) {
@@ -112,18 +82,17 @@ public:
 		}
 	}
 
-	// Damage when player attacking enemy
-	static float calculatePlayerDamage(const PhysicalAbility& physicalAbility) {
+	float CombatEngine::calculatePlayerDamage(const PhysicalAbility* physicalAbility) {
 		// Float that get the effective damage multiplier caused by damage deduction of enemy armor
 		float damageMultiplier = static_cast<float>(1.0) - (enemy.getArmor() / static_cast<float>(100.0));
 		// Float for the damage that is effectively caused to the enemy
-		float effectiveDamage = player.getDamageFactor() * physicalAbility.getDamage() * damageMultiplier;
+		float effectiveDamage = player.getDamageFactor() * physicalAbility->getDamage() * damageMultiplier;
 
-		float finalDamage = std::min(effectiveDamage, player.getHealth());
+		float finalDamage = std::min(effectiveDamage, enemy.getHealth());
 		return finalDamage;
 	}
 
-	static float calculatePlayerDamage() {
+	float CombatEngine::calculatePlayerDamage() {
 		// Float that get the effective damage multiplier caused by damage deduction of enemy armor
 		float damageMultiplier = static_cast<float>(1.0) - enemy.getArmor() / static_cast<float>(100.0);
 		// Float for the damage that is effectively caused to the enemy
@@ -142,20 +111,14 @@ public:
 
 		return finalDamage;
 	}
-
-
-	// Damage when enemy attacking player
-	static float calculateEnemyDamage() {
+	float CombatEngine::calculateEnemyDamage() {
 		float damageMultiplier = static_cast<float>(1) - player.getArmor() / static_cast<float>(100);
 		float effectiveDamage = enemy.getDamage() * damageMultiplier;
-
 		if (effectiveDamage < 0) {
 			effectiveDamage = 0;
 		}
 
-		// If damage is higher than
-		float finalDamage = std::min(effectiveDamage, player.getHealth());
+		float finalDamage = std::min(effectiveDamage, player.getHealth()); // prevents negative playerHealth later
 
 		return finalDamage;
 	}
-};

@@ -1,8 +1,7 @@
 #pragma once
 
 #include <string>
-
-#include "AbilityUtils.hpp"
+#include "../components/Ability.hpp"
 
 extern PhysicalAbility* boxing; // = createPhysicalAbility("Boxing", "", 1, 1);
 extern PhysicalAbility* kickboxing; // = createPhysicalAbility("Kickboxing", "", 2, 1.4);
