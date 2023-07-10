@@ -7,6 +7,12 @@
 #include "../components/Inventory.hpp"
 #include "../components/Item.hpp"
 
+enum class CombatOption {
+	PhysicalAbility,
+	MagicAbility,
+	EquippedWeapon
+};
+
 class IOHandler {
 public:
 	static void displayPlayerDeath();
@@ -19,7 +25,7 @@ public:
 	static void displayMagicAbilities(const std::vector<MagicAbility*>& abilities);
 
 	static void displaySelectionPhysicalAbilities(const std::vector<PhysicalAbility*>& abilities);
-	static void displaySelectionMagicAbilities(const std::vector<PhysicalAbility*>& abilities);
+	static void displaySelectionMagicAbilities(const std::vector<PhysicalAbility*>& magicAbilities); // parameter name!
 	static void displaySelectionCombatMenu(std::vector<PhysicalAbility*> playerPhysicalAbilities, std::vector<MagicAbility*> playerMagicAbilities, Weapon* playerEquippedWeapon);
 
 
@@ -28,4 +34,5 @@ public:
 		// Readers
 
 	static PhysicalAbility* readSelectionPhysicalAbilities(const std::vector<PhysicalAbility*>& abilities);
+	static CombatOption readSelectionCombatOptions(std::vector<PhysicalAbility*> playerPhysicalAbilites, std::vector<MagicAbility*> playerMagicAbilites, Weapon* playerEquippedWeapon);
 };

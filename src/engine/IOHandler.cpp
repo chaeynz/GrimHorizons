@@ -44,7 +44,6 @@ void IOHandler::displaySelectionCombatMenu(std::vector<PhysicalAbility*> playerP
 	// displayPromptInput();
 }
 
-
 void IOHandler::displayInvalidChoice() {
 	std::cout << "\nInvalid choice.\n\n";
 }
@@ -59,5 +58,18 @@ PhysicalAbility* IOHandler::readSelectionPhysicalAbilities(const std::vector<Phy
 		displayInvalidChoice();
 		displaySelectionPhysicalAbilities(abilities);
 		return readSelectionPhysicalAbilities(abilities);
+	}
+}
+
+static CombatOption readSelectionCombatOptions(std::vector<PhysicalAbility*> playerPhysicalAbilites, std::vector<MagicAbility*> playerMagicAbilites, Weapon* playerEquippedWeapon) {
+	int choice;
+	std::cin >> choice;
+
+	if (!playerPhysicalAbilites.empty()) {
+
+	}
+	if (!playerMagicAbilites.empty()) {
+	}
+	if (playerEquippedWeapon != nullptr) {
 	}
 }
