@@ -24,15 +24,19 @@ public:
 	static void displayPhysicalAbilities(const std::vector<PhysicalAbility*>& abilities);
 	static void displayMagicAbilities(const std::vector<MagicAbility*>& abilities);
 
-	static void displaySelectionPhysicalAbilities(const std::vector<PhysicalAbility*>& abilities);
-	static void displaySelectionMagicAbilities(const std::vector<PhysicalAbility*>& magicAbilities); // parameter name!
-	static void displaySelectionCombatMenu(std::vector<PhysicalAbility*> playerPhysicalAbilities, std::vector<MagicAbility*> playerMagicAbilities, Weapon* playerEquippedWeapon);
+	static void displaySelectionPhysicalAbilities(const std::vector<PhysicalAbility*>& physicalAbilities);
+	static void displaySelectionMagicAbilities(const std::vector<MagicAbility*>& magicAbilities);
+	static void displaySelectionCombatOptions(std::vector<PhysicalAbility*> playerPhysicalAbilities, std::vector<MagicAbility*> playerMagicAbilities, Weapon* playerEquippedWeapon);
 
 
 	static void displayInvalidChoice();
 
 		// Readers
 
-	static PhysicalAbility* readSelectionPhysicalAbilities(const std::vector<PhysicalAbility*>& abilities);
+	static PhysicalAbility* readSelectionPhysicalAbilities(const std::vector<PhysicalAbility*>& physicalAbilities);
+	static MagicAbility* readSelectionMagicAbilities(const std::vector<MagicAbility*>& magicAbilities);
+	
+	
 	static CombatOption readSelectionCombatOptions(std::vector<PhysicalAbility*> playerPhysicalAbilites, std::vector<MagicAbility*> playerMagicAbilites, Weapon* playerEquippedWeapon);
+
 };

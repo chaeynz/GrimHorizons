@@ -4,6 +4,6 @@
 
 void combat() {
 	while (CombatEngine::isEnemyAlive() && CombatEngine::isPlayerAlive()) {
-		CombatEngine::attackEnemy(CombatEngine::selectPhysicalAbility());
+		CombatEngine::fight();
 	}
 }
