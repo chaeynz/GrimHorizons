@@ -137,10 +137,24 @@ void Player::addMagicAbility(MagicAbility* magicAbility) { // changed from (cons
 		magicAbilities.push_back(magicAbility);
 	}
 
-void Player::addItemToInventory(const Item& item) {
+void Player::addItemToInventory(Item* item) {
 		inventory.addItem(item, 1);
 	}
-void Player::addItemToInventory(const Item& item, int quantity) {
+void Player::addItemToInventory(Item* item, int quantity) {
 		inventory.addItem(item, quantity);
 	}
 
+void Player::addGold(int gold) {
+	this->gold += gold;
+}
+void Player::addExperience(float experience) {
+	this->experience += experience;
+}
+
+void Player::removeGold(int gold) {
+	this->gold -= gold;
+}
+
+void Player::removeExperience(float experience) {
+	this->experience -= experience;
+}

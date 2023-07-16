@@ -69,6 +69,12 @@ public:
 	void addPhysicalAbility(PhysicalAbility* physicalAbility);
 	void addMagicAbility(MagicAbility* magicAbility);
 
-	void addItemToInventory(const Item& item);
-	void addItemToInventory(const Item& item, int quantity);
+	void addItemToInventory(Item* item);
+	void addItemToInventory(Item* item, int quantity);
+
+	void addGold(int gold);
+	void addExperience(float experience);
+
+	void removeGold(int gold);
+	void removeExperience(float experience);
 };

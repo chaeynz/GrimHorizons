@@ -1,5 +1,5 @@
-/*#include "Level.hpp"
+#include "Level.hpp"
 
-Level::Level(int levelId, std::string levelName, std::vector<Enemy> levelEnemies) : id(levelId), name(levelName), enemies(levelEnemies) {
-	lastAssignedId++;
-}*/
+Level::Level(std::string levelName, std::vector<Enemy> levelEnemies) : id(++lastAssignedId), name(levelName), enemies(levelEnemies) {
+
+}

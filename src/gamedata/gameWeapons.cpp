@@ -1,7 +1,7 @@
 #include "gameWeapons.hpp"
 
-Weapon woodenSword("Wooden Sword", "This is a standard wooden sword", Rarity::Common, 0, 1, 1, 2);
-Weapon copperSword("Copper Sword", "Atleast it's better than wood!", Rarity::Common, 10, 2, 1.5, 3.5);
+Weapon* woodenSword = new Weapon("Wooden Sword", "This is a standard wooden sword", Rarity::Common, 0, 1, 1, 2);
+Weapon* copperSword = new Weapon("Copper Sword", "Atleast it's better than wood!", Rarity::Common, 10, 2, 1.5, 3.5);
 
 Weapon weapon_NewArmy1885("New Army", "G-g-g-g-un?", Rarity::Epic, 800, 17, 0.9, 12);
 Weapon weapon_Beretta92("Beretta 92", "", Rarity::Rare, 1000, 20, 1.2, 11);

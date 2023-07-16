@@ -29,10 +29,12 @@ public:
 	static void distributeGold();
 	static void distributeLoot();
 
+	static void dropEnemy();
+
 	static PhysicalAbility* selectPhysicalAbility();
 	static MagicAbility* selectMagicAbility();
 
-	static float calculatePlayerDamage(const PhysicalAbility* physicalAbility);
+	static float calculatePlayerDamage(const float phyicalAbilityDamage);
 	static float calculatePlayerDamage();
 	static float calculateEnemyDamage();
 };

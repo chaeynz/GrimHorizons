@@ -3,6 +3,9 @@
 	bool Item::operator<(const Item& other) const {
 		return id < other.id;
 	}
+	bool Item::operator==(const Item& other) const {
+		return id == other.id; // Compare based on the ID
+	}
 
 	// Constructor
 	Item::Item(const std::string& itemName, const std::string& itemDescription, const Rarity itemRarity, const int itemValue, const int itemRequiredLevel, const float itemWeight) : name(itemName), description(itemDescription), rarity(itemRarity), value(itemValue), requiredLevel(itemRequiredLevel), weight(itemWeight) {

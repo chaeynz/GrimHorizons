@@ -128,6 +128,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\engine\EconomyEngine.hpp" />
+    <ClInclude Include="src\gamedata\gameEnemies.hpp" />
     <ClInclude Include="src\components\ShopInventory.hpp" />
     <ClInclude Include="src\gamedata\gameEventHandlers.hpp" />
     <ClInclude Include="src\engine\EventHandler.hpp" />
@@ -149,6 +151,8 @@
     <ClInclude Include="src\menu\shop.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine\EconomyEngine.cpp" />
+    <ClCompile Include="src\gamedata\gameEnemies.cpp" />
     <ClCompile Include="src\components\ShopInventory.cpp" />
     <ClCompile Include="src\gamedata\gameEventHandlers.cpp" />
     <ClCompile Include="src\engine\EventHandler.cpp" />

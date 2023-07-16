@@ -1,7 +1,14 @@
 #include "IOHandler.hpp"
 
+int numMainmenuOptions = 6;
+
+
 void IOHandler::displayPlayerDeath() {
 	std::cout << "Better luck next time!\n";
+}
+
+void IOHandler::displayEnemyDeath() {
+	std::cout << "Good job!\n";
 }
 
 void IOHandler::displayCausedDamage(const std::string& causerName, const  std::string& receiverName, const  float& causedDamage, const  float& receiverHealth, const  float& receiverMaxHealth) {
@@ -9,12 +16,36 @@ void IOHandler::displayCausedDamage(const std::string& causerName, const  std::s
 	std::cout << receiverName << " has " << std::fixed << std::setprecision(2) << receiverHealth << "/" << receiverMaxHealth << " remaining\n\n";
 }
 
+void IOHandler::displayGold(const int& playerGold) {
+	std::cout << "\nPlayer Gold: " << playerGold << std::endl;
+}
+
+void IOHandler::displayExperience(const float& playerExperience) {
+	std::cout << "\nPlayer Experience: " << playerExperience << std::endl;
+}
+
 void IOHandler::displayInventory(const Inventory& inventory) {
 	std::cout << "\nInventory:\n";
 	for (const auto& pair : inventory.getItems()) {
-		const Item& item = pair.first;
+		const Item* item = pair.first;
 		int quantity = pair.second;
-		std::cout << "Item: " << item.getName() << ", Quantity: " << quantity << std::endl;
+		std::cout << "Item: " << item->getName() << ", Quantity: " << quantity << std::endl;
+	}
+}
+
+void IOHandler::displayShopInventory(const std::map<Item*, std::pair<int, int>>& items) {
+	std::cout << "Welcome to the Shop:\n";
+	std::cout << std::left;
+	std::cout << std::setw(10) << "Id";
+	std::cout << std::setw(20) << "Item";
+	std::cout << std::setw(10) << "Price";
+	std::cout << std::setw(10) << "Amount" << std::endl;
+	int i = 0;
+	for (const auto& item : items) {
+		std::cout << std::setw(10) << item.first->getId();
+		std::cout << std::setw(20) << item.first->getName();
+		std::cout << std::setw(10) << item.second.first;
+		std::cout << std::setw(10) << item.second.second << std::endl;
 	}
 }
 
@@ -31,6 +62,12 @@ void IOHandler::displayMagicAbilities(const std::vector<MagicAbility*>& magicAbi
 	}
 	std::cout << std::endl;
 }
+
+void IOHandler::displaySelectionShopInventory(const std::map<Item*, std::pair<int, int>>& items) {
+	displayShopInventory(items);
+	displayPromptForInput();
+}
+
 void IOHandler::displaySelectionPhysicalAbilities(const std::vector <PhysicalAbility*>& physicalAbilities) {
 	displayPhysicalAbilities(physicalAbilities);
 	displayPromptForInput();
@@ -53,6 +90,20 @@ void IOHandler::displaySelectionCombatOptions(const std::vector<PhysicalAbility*
 	if (playerEquippedWeapon != nullptr) {
 		std::cout << "\t" << i++ << ". Attack with weapon\n";
 	}
+
+	displayPromptForInput();
+}
+
+void IOHandler::displaySelectionMainmenuOptions() {
+	int i = 0;
+	std::cout << "Welcome to Grim Horizons\n\n";
+
+	std::cout << "\t" << ++i << ". Combat\n";
+	std::cout << "\t" << ++i << ". Shop\n";
+	std::cout << "\t" << ++i << ". Inventory\n";
+	std::cout << "\t" << ++i << ". Ability Tree\n";
+	std::cout << "\t" << ++i << ". Credits\n";
+	std::cout << "\t" << ++i << ". Quit\n";
 
 	displayPromptForInput();
 }
@@ -93,8 +144,20 @@ int IOHandler::readChoice() { // THE ONLY ACTUAL READER ITS SO GOOD
 	}
 }
 
-PhysicalAbility* IOHandler::readSelectionPhysicalAbilities(const std::vector<PhysicalAbility*>& physicalAbilities) {
+Item* IOHandler::readSelectionShopInventory(const ShopInventory& shop) {
 	int choice;
+	choice = readChoice();
+	for (const auto& item : shop.getItems()) {
+		if (item.first->getId() = choice) {
+			return item.first;
+		}
+	}
+	
+}
+
+
+PhysicalAbility* IOHandler::readSelectionPhysicalAbilities(const std::vector<PhysicalAbility*>& physicalAbilities) {
+int choice;
 	choice = readChoice();
 	if (choice >= 1 && choice <= static_cast<int>(physicalAbilities.size())) {
 		return physicalAbilities[choice - 1];
@@ -138,3 +201,26 @@ CombatOption IOHandler::readSelectionCombatOptions(const std::vector<PhysicalAbi
 		return readSelectionCombatOptions(playerPhysicalAbilities, playerMagicAbilities, playerEquippedWeapon);
 	}
 }
+
+MainmenuOption IOHandler::readSelectionMainmenuOptions() {
+	int choice;
+	choice = readChoice();
+	if (choice >= 0 && choice <= numMainmenuOptions) {
+		return (MainmenuOption)(choice - 1);
+	}
+	else {
+		displayInvalidChoice();
+		displaySelectionMainmenuOptions();
+		return readSelectionMainmenuOptions();
+	}
+
+}
+
+/*
+PROTOTYPE FOR LATER
+void shootBullets(int numBullets, int delay) {
+    for (int i = 0; i < numBullets; ++i) {
+        std::cout << "Bullet ";
+        Sleep(delay);
+    }
+}*/

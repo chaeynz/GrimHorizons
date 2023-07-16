@@ -19,13 +19,13 @@ protected:
 	int level;
 	float dropExperience;
 	int dropGold;
-	std::vector<Item> dropTable;
+	std::vector<Item*> dropTable;
 	bool isBoss;
 	Element element;
 
 public:
-	Enemy(std::string& enemyName, float enemyDamage, float enemyMaxHealth, float enemyArmor, int enemyLevel, float enemyDropExperience, int enemyDropGold, std::vector<Item> enemyDropTable = {}, bool enemyIsBoss = false, Element enemyElement = Element::None);
-	Enemy(const char* enemyName, float enemyDamage, float enemyMaxHealth, float enemyArmor, int enemyLevel, float enemyDropExperience, int enemyDropGold, std::vector<Item> enemyDropTable = {}, bool enemyIsBoss = false, Element enemyElement = Element::None);
+	Enemy(std::string& enemyName, float enemyDamage, float enemyMaxHealth, float enemyArmor, int enemyLevel, float enemyDropExperience, int enemyDropGold, std::vector<Item*> enemyDropTable = {}, bool enemyIsBoss = false, Element enemyElement = Element::None);
+	Enemy(const char* enemyName, float enemyDamage, float enemyMaxHealth, float enemyArmor, int enemyLevel, float enemyDropExperience, int enemyDropGold, std::vector<Item*> enemyDropTable = {}, bool enemyIsBoss = false, Element enemyElement = Element::None);
 	
 	// Getter functions
 	int getId() const;
@@ -46,7 +46,7 @@ public:
 	
 	int getDropGold() const;
 	
-	std::vector<Item> getDropTable() const;
+	std::vector<Item*> getDropTable() const;
 	
 	bool getIsBoss() const;
 	
@@ -69,7 +69,7 @@ public:
 
 	void setDropGold(int newDropGold);
 
-	void setDropTable(std::vector<Item> newDropTable);
+	void setDropTable(std::vector<Item*> newDropTable);
 
 	void setIsBoss(bool newIsBoss);
 

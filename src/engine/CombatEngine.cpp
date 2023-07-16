@@ -59,7 +59,7 @@
 
 	}
 	void CombatEngine::attackEnemy(const PhysicalAbility* physicalAbility) {
-		float damage = calculatePlayerDamage(physicalAbility);
+		float damage = calculatePlayerDamage(physicalAbility->getDamage());
 		enemy.takeDamage(damage);
 
 		IOHandler::displayCausedDamage(player.getName(), enemy.getName(), damage, enemy.getHealth(), enemy.getMaxHealth());
@@ -69,20 +69,23 @@
 	}
 
 	void CombatEngine::distributeExperience() {
-
+		player.addExperience(enemy.getDropExperience());
 	}
 
 	void CombatEngine::distributeGold() {
-
+		player.addGold(enemy.getDropGold());
 	}
 
 	void CombatEngine::distributeLoot() {
-		if (enemy.getHealth() == 0) {
+		if (!enemy.getDropTable().empty()) {
+			player.addItemToInventory(enemy.getDropTable()[1]);
+		}
+	}
 
-		}
-		else if (enemy.getHealth() < 0) {
-			std::cout << "Attenzione! Health below 0";
-		}
+	void CombatEngine::dropEnemy() {
+		distributeExperience();
+		distributeGold();
+		distributeLoot();
 	}
 
 	PhysicalAbility* CombatEngine::selectPhysicalAbility() {
@@ -107,9 +110,9 @@
 		}
 	}
 
-	float CombatEngine::calculatePlayerDamage(const PhysicalAbility* physicalAbility) {	
-		float damageMultiplier = static_cast<float>(1.0) - (enemy.getArmor() / static_cast<float>(100.0));	// Float that get the effective damage multiplier caused by damage deduction of enemy armor
-		float effectiveDamage = player.getDamageFactor() * physicalAbility->getDamage() * damageMultiplier;	// Float for the damage that is effectively caused to the enemy
+	float CombatEngine::calculatePlayerDamage(const float physicalAbilityDamage) {	
+		float damageMultiplier = static_cast<float>(1.0) - (enemy.getArmor() / static_cast<float>(100.0));
+		float effectiveDamage = player.getDamageFactor() * physicalAbilityDamage * damageMultiplier;
 
 
 		float finalDamage = std::min(effectiveDamage, enemy.getHealth());
@@ -117,9 +120,7 @@
 	}
 
 	float CombatEngine::calculatePlayerDamage() {
-		// Float that get the effective damage multiplier caused by damage deduction of enemy armor
 		float damageMultiplier = static_cast<float>(1.0) - enemy.getArmor() / static_cast<float>(100.0);
-		// Float for the damage that is effectively caused to the enemy
 		float effectiveDamage;
 		try
 		{

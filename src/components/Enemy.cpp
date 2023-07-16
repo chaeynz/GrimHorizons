@@ -1,8 +1,8 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy(std::string& enemyName, float enemyDamage, float enemyMaxHealth, float enemyArmor, int enemyLevel, float enemyDropExperience, int enemyDropGold, std::vector<Item> enemyDropTable, bool enemyIsBoss, Element enemyElement) : id(++lastAssignedId), name(enemyName), damage(enemyDamage), maxHealth(enemyMaxHealth), health(maxHealth), armor(enemyArmor), level(enemyLevel), dropExperience(enemyDropExperience), dropGold(enemyDropGold), dropTable(enemyDropTable), isBoss(enemyIsBoss), element(enemyElement) {
+Enemy::Enemy(std::string& enemyName, float enemyDamage, float enemyMaxHealth, float enemyArmor, int enemyLevel, float enemyDropExperience, int enemyDropGold, std::vector<Item*> enemyDropTable, bool enemyIsBoss, Element enemyElement) : id(++lastAssignedId), name(enemyName), damage(enemyDamage), maxHealth(enemyMaxHealth), health(maxHealth), armor(enemyArmor), level(enemyLevel), dropExperience(enemyDropExperience), dropGold(enemyDropGold), dropTable(enemyDropTable), isBoss(enemyIsBoss), element(enemyElement) {
 	}
-Enemy::Enemy(const char* enemyName, float enemyDamage, float enemyMaxHealth, float enemyArmor, int enemyLevel, float enemyDropExperience, int enemyDropGold, std::vector<Item> enemyDropTable, bool enemyIsBoss, Element enemyElement) : id(++lastAssignedId), name(enemyName), damage(enemyDamage), maxHealth(enemyMaxHealth), health(maxHealth), armor(enemyArmor), level(enemyLevel), dropExperience(enemyDropExperience), dropGold(enemyDropGold), dropTable(enemyDropTable), isBoss(enemyIsBoss), element(enemyElement) {
+Enemy::Enemy(const char* enemyName, float enemyDamage, float enemyMaxHealth, float enemyArmor, int enemyLevel, float enemyDropExperience, int enemyDropGold, std::vector<Item*> enemyDropTable, bool enemyIsBoss, Element enemyElement) : id(++lastAssignedId), name(enemyName), damage(enemyDamage), maxHealth(enemyMaxHealth), health(maxHealth), armor(enemyArmor), level(enemyLevel), dropExperience(enemyDropExperience), dropGold(enemyDropGold), dropTable(enemyDropTable), isBoss(enemyIsBoss), element(enemyElement) {
 	}
 // Getters
 int Enemy::getId() const {
@@ -32,7 +32,7 @@ float Enemy::getDropExperience() const {
 int Enemy::getDropGold() const {
 		return dropGold;
 	}
-std::vector<Item> Enemy::getDropTable() const {
+std::vector<Item*> Enemy::getDropTable() const {
 		return dropTable;
 	}
 bool Enemy::getIsBoss() const {
@@ -63,7 +63,7 @@ void Enemy::setDropExperience(float newDropExperience) {
 void Enemy::setDropGold(int newDropGold) {
 		dropGold = newDropGold;
 	}
-void Enemy::setDropTable(std::vector<Item> newDropTable) {
+void Enemy::setDropTable(std::vector<Item*> newDropTable) {
 		dropTable = newDropTable;
 	}
 void Enemy::setIsBoss(bool newIsBoss) {
