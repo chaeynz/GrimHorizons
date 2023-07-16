@@ -10,6 +10,7 @@ protected:
 	int requiredLevel;
 
 public:
+	Ability();
 	Ability(std::string& abilityName, const std::string abilityDescription, int abilityRequiredLevel);
 	Ability(const char* abilityName, const char* abilityDescription, int abilityRequiredLevel);
 	
@@ -37,5 +38,4 @@ public:
 };
 
 class MagicAbility : public Ability {
-
 };

@@ -4,13 +4,13 @@ void IOHandler::displayPlayerDeath() {
 	std::cout << "Better luck next time!\n";
 }
 
-void IOHandler::displayCausedDamage(std::string causerName, std::string receiverName, float causedDamage, float receiverHealth, float receiverMaxHealth) {
+void IOHandler::displayCausedDamage(const std::string& causerName, const  std::string& receiverName, const  float& causedDamage, const  float& receiverHealth, const  float& receiverMaxHealth) {
 	std::cout << causerName << " dealt ~" << std::ceil(causedDamage) << " damage to " << receiverName << std::endl;
-	std::cout << receiverName << " has " << std::fixed << std::setprecision(2) << receiverHealth << "/" << receiverMaxHealth << " remaining\n";
+	std::cout << receiverName << " has " << std::fixed << std::setprecision(2) << receiverHealth << "/" << receiverMaxHealth << " remaining\n\n";
 }
 
-void IOHandler::displayInventory(Inventory& inventory) {
-	std::cout << "Inventory:\n";
+void IOHandler::displayInventory(const Inventory& inventory) {
+	std::cout << "\nInventory:\n";
 	for (const auto& pair : inventory.getItems()) {
 		const Item& item = pair.first;
 		int quantity = pair.second;
@@ -19,49 +19,83 @@ void IOHandler::displayInventory(Inventory& inventory) {
 }
 
 void IOHandler::displayPhysicalAbilities(const std::vector<PhysicalAbility*>& physicalAbilities) {
-	std::cout << "Available Physical Abilities:\n";
+	std::cout << "\n\nAvailable Physical Abilities:\n\n";
 	for (size_t i = 0; i < physicalAbilities.size(); ++i) {
-		std::cout << i + 1 << ". " << physicalAbilities[i]->getName() << std::endl;
+		std::cout << "\t" << i + 1 << ". " << physicalAbilities[i]->getName() << std::endl;
 	}
-	std::cout << std::endl; 
 }
 void IOHandler::displayMagicAbilities(const std::vector<MagicAbility*>& magicAbilities) {
-	std::cout << "Available Magic Abilities:\n";
+	std::cout << "\n\nAvailable Magic Abilities:\n\n";
 	for (size_t i = 0; i < magicAbilities.size(); ++i) {
 		std::cout << i + 1 << ". " << magicAbilities[i]->getName() << std::endl;
 	}
 	std::cout << std::endl;
 }
 void IOHandler::displaySelectionPhysicalAbilities(const std::vector <PhysicalAbility*>& physicalAbilities) {
-		displayPhysicalAbilities(physicalAbilities);
-		std::cout << "Select a Physical Ability: ";
+	displayPhysicalAbilities(physicalAbilities);
+	displayPromptForInput();
 }
 void IOHandler::displaySelectionMagicAbilities(const std::vector <MagicAbility*>& magicAbilities) {
 	displayMagicAbilities(magicAbilities);
-	std::cout << "Select a Magic Ability: ";
+	displayPromptForInput();
 }
-void IOHandler::displaySelectionCombatOptions(std::vector<PhysicalAbility*> playerPhysicalAbilites, std::vector<MagicAbility*> playerMagicAbilites, Weapon* playerEquippedWeapon) {
+void IOHandler::displaySelectionCombatOptions(const std::vector<PhysicalAbility*>& playerPhysicalAbilites, const std::vector<MagicAbility*>& playerMagicAbilites, Weapon* playerEquippedWeapon) {
 	int i = 1;
+
+	std::cout << "Available Attacks:\n\n";
+
 	if (!playerPhysicalAbilites.empty()) {
-		std::cout << i++ << ". Attack with physical ability\n";
+		std::cout << "\t" << i++ << ". Attack with physical ability\n";
 	} 
 	if (!playerMagicAbilites.empty()) {
-		std::cout << i++ << ". Attack with magic ability\n";
+		std::cout << "\t" << i++ << ". Attack with magic ability\n";
 	}
 	if (playerEquippedWeapon != nullptr) {
-		std::cout << i++ << ". Attack with weapon\n";
+		std::cout << "\t" << i++ << ". Attack with weapon\n";
 	}
 
-	// displayPromptInput();
+	displayPromptForInput();
+}
+
+void IOHandler::displayNotifySelectedPhysicalAbility(const PhysicalAbility* physicalAbility) {
+	system("cls");
+	std::cout << "\nYou selected " << physicalAbility->getName() << "!\n";
+}
+void IOHandler::displayNotifySelectedMagicAbility(const MagicAbility* magicAbility) {
+	system("cls");
+	std::cout << "\nYou selected " << magicAbility->getName() << "!\n";
+}
+void IOHandler::displayNotifySelectedEquippedWeapon(const Weapon* equippedWeapon) {
+	system("cls");
+	std::cout << "\nYou selected " << equippedWeapon->getName() << "!\n";
 }
 
 void IOHandler::displayInvalidChoice() {
 	std::cout << "\nInvalid choice.\n\n";
 }
 
+void IOHandler::displayPromptForInput() {
+	std::cout << "\nSelect an Option: ";
+}
+
+int IOHandler::readChoice() { // THE ONLY ACTUAL READER ITS SO GOOD
+	int choice;
+	while (true) {
+		if (!(std::cin >> choice)) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			return 0;
+		}
+		else {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			return choice;
+		}
+	}
+}
+
 PhysicalAbility* IOHandler::readSelectionPhysicalAbilities(const std::vector<PhysicalAbility*>& physicalAbilities) {
 	int choice;
-	std::cin >> choice;
+	choice = readChoice();
 	if (choice >= 1 && choice <= static_cast<int>(physicalAbilities.size())) {
 		return physicalAbilities[choice - 1];
 	}
@@ -74,7 +108,7 @@ PhysicalAbility* IOHandler::readSelectionPhysicalAbilities(const std::vector<Phy
 
 MagicAbility* IOHandler::readSelectionMagicAbilities(const std::vector<MagicAbility*>& magicAbilities) {
 	int choice;
-	std::cin >> choice;
+	choice = readChoice();
 	if (choice >= 1 && choice <= static_cast<int>(magicAbilities.size())) {
 		return magicAbilities[choice - 1];
 	}
@@ -85,9 +119,9 @@ MagicAbility* IOHandler::readSelectionMagicAbilities(const std::vector<MagicAbil
 	}
 }
 
-CombatOption IOHandler::readSelectionCombatOptions(std::vector<PhysicalAbility*> playerPhysicalAbilities, std::vector<MagicAbility*> playerMagicAbilities, Weapon* playerEquippedWeapon) {
+CombatOption IOHandler::readSelectionCombatOptions(const std::vector<PhysicalAbility*>& playerPhysicalAbilities, const std::vector<MagicAbility*>& playerMagicAbilities, Weapon* playerEquippedWeapon) {
 	int choice;
-	std::cin >> choice;
+	choice = readChoice();
 
 	if (!playerPhysicalAbilities.empty() && choice == 1) {
 		return CombatOption::PhysicalAbility;
@@ -97,5 +131,10 @@ CombatOption IOHandler::readSelectionCombatOptions(std::vector<PhysicalAbility*>
 	}
 	if ((!playerPhysicalAbilities.empty() && !playerMagicAbilities.empty() && playerEquippedWeapon != nullptr && choice == 3) || ((playerPhysicalAbilities.empty() != playerMagicAbilities.empty()) && playerEquippedWeapon != nullptr && choice == 2) || ((playerPhysicalAbilities.empty() && playerMagicAbilities.empty()) && playerEquippedWeapon != nullptr && choice == 1)) {
 		return CombatOption::EquippedWeapon;
+	}
+	else {
+		displayInvalidChoice();
+		displaySelectionCombatOptions(playerPhysicalAbilities, playerMagicAbilities, playerEquippedWeapon);
+		return readSelectionCombatOptions(playerPhysicalAbilities, playerMagicAbilities, playerEquippedWeapon);
 	}
 }

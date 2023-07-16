@@ -34,10 +34,17 @@
 		selectedCombatOption = IOHandler::readSelectionCombatOptions(player.getPhysicalAbilities(), player.getMagicAbilities(), player.getEquippedWeapon());
 
 		if (selectedCombatOption == CombatOption::PhysicalAbility) {
-			attackEnemy(IOHandler::readSelectionPhysicalAbilities(player.getPhysicalAbilities()));
+			PhysicalAbility* selectedPhysicalAbility;
+			IOHandler::displaySelectionPhysicalAbilities(player.getPhysicalAbilities());
+			selectedPhysicalAbility = IOHandler::readSelectionPhysicalAbilities(player.getPhysicalAbilities());
+			IOHandler::displayNotifySelectedPhysicalAbility(selectedPhysicalAbility);
+			attackEnemy(selectedPhysicalAbility);
 		}
 		else if (selectedCombatOption == CombatOption::MagicAbility) {
-			attackEnemy(IOHandler::readSelectionMagicAbilities(player.getMagicAbilities()));
+			MagicAbility* selectedMagicAbility;
+			IOHandler::displaySelectionMagicAbilities(player.getMagicAbilities());
+			selectedMagicAbility = IOHandler::readSelectionMagicAbilities(player.getMagicAbilities());
+			attackEnemy(selectedMagicAbility);
 		}
 		else if (selectedCombatOption == CombatOption::EquippedWeapon) {
 			attackEnemy(player.getEquippedWeapon());
