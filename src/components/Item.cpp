@@ -11,6 +11,7 @@
 
 	}
 
+
 	// Constructor
 	Item::Item(const std::string& itemName, const std::string& itemDescription, const Rarity itemRarity, const int itemValue, const int itemRequiredLevel, const float itemWeight) : name(itemName), description(itemDescription), rarity(itemRarity), value(itemValue), requiredLevel(itemRequiredLevel), weight(itemWeight) {
 		id = lastAssignedId + 1;

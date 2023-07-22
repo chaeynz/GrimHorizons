@@ -68,7 +68,6 @@
 		IOHandler::displayCausedDamage(player.getName(), enemy.getName(), damage, enemy.getHealth(), enemy.getMaxHealth());
 	}
 	void CombatEngine::attackEnemy(const MagicAbility* magicAbility) {
-
 	}
 
 	void CombatEngine::distributeExperience() {
@@ -116,7 +115,6 @@
 	float CombatEngine::calculatePlayerDamage(const float physicalAbilityDamage) {	
 		float damageMultiplier = static_cast<float>(1.0) - (enemy.getArmor() / static_cast<float>(100.0));
 		float effectiveDamage = player.getDamageFactor() * physicalAbilityDamage * damageMultiplier;
-
 
 		float finalDamage = std::min(effectiveDamage, enemy.getHealth());
 		return finalDamage;

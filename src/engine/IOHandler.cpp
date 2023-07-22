@@ -2,7 +2,6 @@
 
 int numMainmenuOptions = 6;
 
-
 void IOHandler::displayPlayerDeath() {
 	std::cout << "Better luck next time!\n";
 }

@@ -32,7 +32,9 @@ float Enemy::getDropExperience() const {
 int Enemy::getDropGold() const {
 		return dropGold;
 	}
+
 std::vector<Item*> Enemy::getDropTable() const {
+
 		return dropTable;
 	}
 bool Enemy::getIsBoss() const {
@@ -63,7 +65,9 @@ void Enemy::setDropExperience(float newDropExperience) {
 void Enemy::setDropGold(int newDropGold) {
 		dropGold = newDropGold;
 	}
+
 void Enemy::setDropTable(std::vector<Item*> newDropTable) {
+
 		dropTable = newDropTable;
 	}
 void Enemy::setIsBoss(bool newIsBoss) {
