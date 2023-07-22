@@ -1,4 +1,4 @@
-/*#pragma once
+#pragma once
 
 #include <string>
 #include <vector>
@@ -7,11 +7,10 @@
 class Level {
 protected:
 	static int lastAssignedId;
-	
 	int id;
 	std::string name;
 	std::vector<Enemy> enemies;
 
 public:
-	Level(int levelId, std::string levelName, std::vector<Enemy> levelEnemies);
-};*/
+	Level(std::string levelName, std::vector<Enemy> levelEnemies);
+};

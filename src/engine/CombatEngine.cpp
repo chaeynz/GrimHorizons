@@ -10,7 +10,7 @@
 			return false;
 		}
 		else {
-			std::cout << "Error: Enemy HP is below 0\n";
+			std::cout << "Error: Enemy HP (" << enemy.getHealth() << ") is below 0\n";
 			return false;
 		}
 	}
@@ -22,42 +22,72 @@
 			return false;
 		}
 		else {
-			std::cout << "Error: Player HP is below 0\n";
+			std::cout << "Error: Player HP (" << player.getHealth() << ") is below 0\n";
 			return false;
 		}
+	}
+
+	void CombatEngine::fight() {
+		CombatOption selectedCombatOption;
+		IOHandler::displaySelectionCombatOptions(player.getPhysicalAbilities(), player.getMagicAbilities(), player.getEquippedWeapon());
+
+		selectedCombatOption = IOHandler::readSelectionCombatOptions(player.getPhysicalAbilities(), player.getMagicAbilities(), player.getEquippedWeapon());
+
+		if (selectedCombatOption == CombatOption::PhysicalAbility) {
+			PhysicalAbility* selectedPhysicalAbility;
+			IOHandler::displaySelectionPhysicalAbilities(player.getPhysicalAbilities());
+			selectedPhysicalAbility = IOHandler::readSelectionPhysicalAbilities(player.getPhysicalAbilities());
+			IOHandler::displayNotifySelectedPhysicalAbility(selectedPhysicalAbility);
+			attackEnemy(selectedPhysicalAbility);
+		}
+		else if (selectedCombatOption == CombatOption::MagicAbility) {
+			MagicAbility* selectedMagicAbility;
+			IOHandler::displaySelectionMagicAbilities(player.getMagicAbilities());
+			selectedMagicAbility = IOHandler::readSelectionMagicAbilities(player.getMagicAbilities());
+			attackEnemy(selectedMagicAbility);
+		}
+		else if (selectedCombatOption == CombatOption::EquippedWeapon) {
+			attackEnemy(player.getEquippedWeapon());
+		}
+
 	}
 
 	void CombatEngine::attackPlayer() {
 		//	player.takeDamage(calculateEnemyDamage());
 	}
-	void CombatEngine::attackEnemy() {
-
-	}
-	void CombatEngine::attackEnemy(const PhysicalAbility* physicalAbility) {
-		float damage = calculatePlayerDamage(physicalAbility);
+	void CombatEngine::attackEnemy(const Weapon* weapon) {
+		float damage = calculatePlayerDamage(weapon->getDamage());
 		enemy.takeDamage(damage);
 
 		IOHandler::displayCausedDamage(player.getName(), enemy.getName(), damage, enemy.getHealth(), enemy.getMaxHealth());
 	}
-	void CombatEngine::attackEnemy(const MagicAbility& magicAbility) {
+	void CombatEngine::attackEnemy(const PhysicalAbility* physicalAbility) {
+		float damage = calculatePlayerDamage(physicalAbility->getDamage());
+		enemy.takeDamage(damage);
 
+		IOHandler::displayCausedDamage(player.getName(), enemy.getName(), damage, enemy.getHealth(), enemy.getMaxHealth());
+	}
+	void CombatEngine::attackEnemy(const MagicAbility* magicAbility) {
 	}
 
 	void CombatEngine::distributeExperience() {
-
+		player.addExperience(enemy.getDropExperience());
 	}
 
 	void CombatEngine::distributeGold() {
-
+		player.addGold(enemy.getDropGold());
 	}
 
 	void CombatEngine::distributeLoot() {
-		if (enemy.getHealth() == 0) {
+		if (!enemy.getDropTable().empty()) {
+			player.addItemToInventory(enemy.getDropTable()[1]);
+		}
+	}
 
-		}
-		else if (enemy.getHealth() < 0) {
-			std::cout << "Attenzione! Health below 0";
-		}
+	void CombatEngine::dropEnemy() {
+		distributeExperience();
+		distributeGold();
+		distributeLoot();
 	}
 
 	PhysicalAbility* CombatEngine::selectPhysicalAbility() {
@@ -82,20 +112,16 @@
 		}
 	}
 
-	float CombatEngine::calculatePlayerDamage(const PhysicalAbility* physicalAbility) {
-		// Float that get the effective damage multiplier caused by damage deduction of enemy armor
+	float CombatEngine::calculatePlayerDamage(const float physicalAbilityDamage) {	
 		float damageMultiplier = static_cast<float>(1.0) - (enemy.getArmor() / static_cast<float>(100.0));
-		// Float for the damage that is effectively caused to the enemy
-		float effectiveDamage = player.getDamageFactor() * physicalAbility->getDamage() * damageMultiplier;
+		float effectiveDamage = player.getDamageFactor() * physicalAbilityDamage * damageMultiplier;
 
 		float finalDamage = std::min(effectiveDamage, enemy.getHealth());
 		return finalDamage;
 	}
 
 	float CombatEngine::calculatePlayerDamage() {
-		// Float that get the effective damage multiplier caused by damage deduction of enemy armor
 		float damageMultiplier = static_cast<float>(1.0) - enemy.getArmor() / static_cast<float>(100.0);
-		// Float for the damage that is effectively caused to the enemy
 		float effectiveDamage;
 		try
 		{

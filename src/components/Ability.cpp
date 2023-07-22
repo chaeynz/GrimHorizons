@@ -2,6 +2,11 @@
 #include "Ability.hpp"
 
 
+Ability::Ability() {
+
+	}
+
+
 	Ability::Ability(std::string& abilityName, const std::string abilityDescription, int abilityRequiredLevel) : name(abilityName), description(abilityDescription), requiredLevel(abilityRequiredLevel) {
 
 	}

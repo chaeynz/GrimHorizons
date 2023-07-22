@@ -19,8 +19,11 @@ protected:
 
 public:
 	bool operator<(const Item& other) const;
+	bool operator==(const Item& other) const;
 
 	Item(const std::string& itemName, const std::string& itemDescription, const Rarity itemRarity, const int itemValue, const int itemRequiredLevel, const float itemWeight);
+
+	virtual ~Item();
 
 	int getId();
 	std::string getName() const;

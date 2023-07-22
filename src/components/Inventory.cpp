@@ -4,23 +4,29 @@
 
 	}
 
-	std::map<Item, int> Inventory::getItems() const {
+
+	std::map<Item*, int> Inventory::getItems() const {
 		return items;
 	}
 
-	std::map<Item, int>::iterator Inventory::findItem(Item& item) {
-		return items.find(item);
-	}
-	std::map<Item, int>::iterator Inventory::findItem(Item* itemPointer) {
-		return items.find(*itemPointer);
+	std::map<Item*, int>::iterator Inventory::findItem(Item* itemPointer) {
+		return items.find(itemPointer);
 	}
 
-	void Inventory::addItem(const Item& item, int quantity) {
-		auto it = items.find(item);
+	void Inventory::addItem(Item* targetItem, const int quantity) {
+		auto it = items.find(targetItem);
+
 		if (it != items.end()) {
 			it->second += quantity;
 		}
 		else {
-			items.insert(std::make_pair(item, quantity));
+
+			items.insert(std::make_pair(targetItem, quantity));
+		}
+	}
+	void Inventory::removeItem(Item* targetItem, const int quantity) {
+		auto it = items.find(targetItem);
+		if (it != items.end()) {
+			items.erase(targetItem);
 		}
 	}

@@ -18,19 +18,23 @@ public:
 	static bool isEnemyAlive();
 	static bool isPlayerAlive();
 
+	static void fight();
+
 	static void attackPlayer();
-	static void attackEnemy();
+	static void attackEnemy(const Weapon* weapon);
 	static void attackEnemy(const PhysicalAbility* physicalAbility);
-	static void attackEnemy(const MagicAbility& magicAbility);
+	static void attackEnemy(const MagicAbility* magicAbility);
 
 	static void distributeExperience();
 	static void distributeGold();
 	static void distributeLoot();
 
+	static void dropEnemy();
+
 	static PhysicalAbility* selectPhysicalAbility();
 	static MagicAbility* selectMagicAbility();
 
-	static float calculatePlayerDamage(const PhysicalAbility* physicalAbility);
+	static float calculatePlayerDamage(const float phyicalAbilityDamage);
 	static float calculatePlayerDamage();
 	static float calculateEnemyDamage();
 };
