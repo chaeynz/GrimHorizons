@@ -30,6 +30,8 @@ public:
 	static void displayPlayerDeath();
 	static void displayEnemyDeath();
 
+	static void displayCombatEnemySpawned(const std::string& enemyName);
+
 	static void displayCausedDamage(const std::string& causerName, const std::string& receiverName, const float& causedDamage, const float& receiverHealth, const float& receiverMaxHealth);
 
 	static void displayGold(const int& playerGold);
@@ -38,6 +40,8 @@ public:
 	static void displayInventory(const Inventory& inventory);
 	static void displayShopInventory(const std::map<Item*, std::pair<int, int>>& items);
 
+	static void displayShopInsufficientGold(const int& playerGold, const int& itemValue);
+	static void displayShopItemNotFound(const Item* targetItem);
 	static void displayPhysicalAbilities(const std::vector<PhysicalAbility*>& abilities);
 	static void displayMagicAbilities(const std::vector<MagicAbility*>& abilities);
 

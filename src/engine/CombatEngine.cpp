@@ -56,7 +56,10 @@
 		//	player.takeDamage(calculateEnemyDamage());
 	}
 	void CombatEngine::attackEnemy(const Weapon* weapon) {
+		float damage = calculatePlayerDamage(weapon->getDamage());
+		enemy.takeDamage(damage);
 
+		IOHandler::displayCausedDamage(player.getName(), enemy.getName(), damage, enemy.getHealth(), enemy.getMaxHealth());
 	}
 	void CombatEngine::attackEnemy(const PhysicalAbility* physicalAbility) {
 		float damage = calculatePlayerDamage(physicalAbility->getDamage());

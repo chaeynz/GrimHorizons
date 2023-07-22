@@ -8,15 +8,16 @@
 
 #include "engine/EconomyEngine.hpp"
 
+#include <Windows.h>
+
 Player CombatEngine::player = Player("Kevin");
-Enemy CombatEngine::enemy = Enemy("Zombie", 5, 20, 2, 1, 3, 5);
+Enemy CombatEngine::enemy = Enemy("Zombie", 5, 10, 2, 1, 3, 5);
 
 int main() {
 	CombatEngine::player.addPhysicalAbility(kickboxing);
 	CombatEngine::player.addPhysicalAbility(muayThai);
 
 	while (true) {
-		system("cls");
 		IOHandler::displaySelectionMainmenuOptions();
 		MainmenuOption selectedMainmenuOption = IOHandler::readSelectionMainmenuOptions();
 
@@ -39,5 +40,6 @@ int main() {
 		else if (selectedMainmenuOption == MainmenuOption::Quit) {
 			return 0;
 		}
+		Sleep(2000);
 	}
 }

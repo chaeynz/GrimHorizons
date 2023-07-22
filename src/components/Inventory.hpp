@@ -15,5 +15,6 @@ public:
 
 	std::map<Item*, int>::iterator findItem(Item* itemPointer);
 
-	void addItem(Item* item, int quantity = 1);
+	void addItem(Item* targetItem, const int quantity = 1);
+	void removeItem(Item* targetItem, const int quantity = 1);
 };

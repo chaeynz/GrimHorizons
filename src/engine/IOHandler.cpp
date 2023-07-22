@@ -11,6 +11,10 @@ void IOHandler::displayEnemyDeath() {
 	std::cout << "Good job!\n";
 }
 
+void IOHandler::displayCombatEnemySpawned(const std::string& enemyName) {
+	std::cout << enemyName << " has spawned!\n";
+}
+
 void IOHandler::displayCausedDamage(const std::string& causerName, const  std::string& receiverName, const  float& causedDamage, const  float& receiverHealth, const  float& receiverMaxHealth) {
 	std::cout << causerName << " dealt ~" << std::ceil(causedDamage) << " damage to " << receiverName << std::endl;
 	std::cout << receiverName << " has " << std::fixed << std::setprecision(2) << receiverHealth << "/" << receiverMaxHealth << " remaining\n\n";
@@ -48,6 +52,16 @@ void IOHandler::displayShopInventory(const std::map<Item*, std::pair<int, int>>&
 		std::cout << std::setw(10) << item.second.second << std::endl;
 	}
 }
+
+void IOHandler::displayShopInsufficientGold(const int& playerGold, const int& itemValue) {
+	std::cout << "\nYou have insufficient funds to buy this item\n\n";
+	std::cout << "\nYou have: " << playerGold;
+	std::cout << "\nYou need: " << itemValue << std::endl;
+}
+void IOHandler::displayShopItemNotFound(const Item* targetItem) {
+	std::cout << "\nItem was not found in this Shop\n";
+}
+
 
 void IOHandler::displayPhysicalAbilities(const std::vector<PhysicalAbility*>& physicalAbilities) {
 	std::cout << "\n\nAvailable Physical Abilities:\n\n";
@@ -148,11 +162,11 @@ Item* IOHandler::readSelectionShopInventory(const ShopInventory& shop) {
 	int choice;
 	choice = readChoice();
 	for (const auto& item : shop.getItems()) {
-		if (item.first->getId() = choice) {
+		if (item.first->getId() == choice) {
 			return item.first;
 		}
 	}
-	
+	return nullptr;
 }
 
 

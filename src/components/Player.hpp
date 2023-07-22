@@ -66,6 +66,8 @@ public:
 	void die();
 	void takeDamage(float damage);
 
+	void equipWeapon(Weapon* targetWeapon);
+
 	void addPhysicalAbility(PhysicalAbility* physicalAbility);
 	void addMagicAbility(MagicAbility* magicAbility);
 

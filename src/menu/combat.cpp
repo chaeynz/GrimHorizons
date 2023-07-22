@@ -5,6 +5,9 @@
 #include "../components/Level.hpp"
 
 void combat() {
+
+	IOHandler::displayCombatEnemySpawned(CombatEngine::enemy.getName());
+
 	while (CombatEngine::isEnemyAlive() && CombatEngine::isPlayerAlive()) {
 		CombatEngine::fight();
 		}

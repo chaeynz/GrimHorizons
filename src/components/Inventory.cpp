@@ -12,12 +12,18 @@
 		return items.find(itemPointer);
 	}
 
-	void Inventory::addItem(Item* item, int quantity) {
-		auto it = items.find(item);
+	void Inventory::addItem(Item* targetItem, const int quantity) {
+		auto it = items.find(targetItem);
 		if (it != items.end()) {
 			it->second += quantity;
 		}
 		else {
-			items.insert(std::make_pair(item, quantity));
+			items.insert(std::make_pair(targetItem, quantity));
+		}
+	}
+	void Inventory::removeItem(Item* targetItem, const int quantity) {
+		auto it = items.find(targetItem);
+		if (it != items.end()) {
+			items.erase(targetItem);
 		}
 	}

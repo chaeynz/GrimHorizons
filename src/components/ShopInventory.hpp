@@ -27,7 +27,7 @@ public:
 	void removeItem(Item* item, const int& amount = std::numeric_limits<int>::max());
 
 
-	std::map<Item*, std::pair<int, int>>::iterator findItem(Item* itemPointer);
+	const std::map<Item*, std::pair<int, int>>::iterator findItem(Item* itemPointer) const;
 
 };
 

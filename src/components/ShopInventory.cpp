@@ -56,7 +56,7 @@ ShopInventory::ShopInventory() : items(itemMap) {
 		}
 	}
 
-	std::map<Item*, std::pair<int, int>>::iterator ShopInventory::findItem(Item* itemPointer) {
+	const std::map<Item*, std::pair<int, int>>::iterator ShopInventory::findItem(Item* itemPointer) const {
 		for (auto it = items.begin(); it != items.end(); ++it) {
 			if (*(it->first) == *itemPointer) {
 				return it;

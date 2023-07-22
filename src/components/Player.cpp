@@ -130,6 +130,10 @@ void Player::takeDamage(float damage) {
 		}
 	}
 
+void Player::equipWeapon(Weapon* targetWeapon) {
+	equippedWeapon = targetWeapon;
+}
+
 void Player::addPhysicalAbility(PhysicalAbility* physicalAbility) { // changed from (const PhysicalAbility* physicalAbility)
 		physicalAbilities.push_back(physicalAbility);
 	}

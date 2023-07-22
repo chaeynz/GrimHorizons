@@ -19,9 +19,9 @@ gun10 = ? / SPAS - 12
 extern Weapon* woodenSword;
 extern Weapon* copperSword;
 
-extern Weapon weapon_NewArmy1885;
-extern Weapon weapon_Beretta92;
-extern Weapon weapon_Colt9mmSMG;
-extern Weapon weapon_Gewehr98;
-extern Weapon weapon_L22Carbine;
-extern Weapon weapon_SawedOff;
+extern Weapon* weapon_NewArmy1885;
+extern Weapon* weapon_Beretta92;
+extern Weapon* weapon_Colt9mmSMG;
+extern Weapon* weapon_Gewehr98;
+extern Weapon* weapon_L22Carbine;
+extern Weapon* weapon_SawedOff;
