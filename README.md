@@ -10,3 +10,5 @@ Would love to have someone contribute, so feel free to add your ideas.<br>
 Head to Issues, I always document open issues on my projects.<br>
 * #21
 * #22
+
+dev branch is the branch where I develop, so look there for the actual up-to-date code.
